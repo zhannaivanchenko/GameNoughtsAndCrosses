@@ -1,6 +1,6 @@
-# Game Oughts And Crosses
+# Game Noughts And Crosses
 
-This is a game oughts and crosses that was created with the help of Javascript code in study purposes.
+This is a game noughts and crosses that was created with the help of Javascript code in study purposes.
 
 ---
 ## How to Play
