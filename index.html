@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Noughts and Crosses!</title>
+    <link href="./src/index.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+    <div class='header'>
+        <h1>Noughts and Crosses</h1>
+    </div>
+    <div class='title-row'>
+        <p class='instructions-title'>Instructions</p>
+    
+      <div class='instructions-row'>
+       <p class='instructions-text'>In order to win the game, you must place three of your marks in a horizontal, vertical, or diagonal row.</p>
+      </div>
+    </div>
+    
+    <div class ='play-chart'>
+      <table class='play-chart-table'>
+        <tr class='chart-row'> 
+          <td class='chart-cell' id='cell-1'></td>
+          <td class='chart-cell' id='cell-2'></td>
+          <td class='chart-cell' id='cell-3'></td>
+        </tr>
+        <tr class='chart-row'>
+          <td class='chart-cell' id='cell-4'></td>
+          <td class='chart-cell' id='cell-5'></td>
+          <td class='chart-cell' id='cell-6'></td>
+        </tr>
+        <tr class='chart-row'>
+          <td class='chart-cell' id='cell-7'></td>
+          <td class='chart-cell' id='cell-8'></td>
+          <td class='chart-cell' id='cell-9'></td>
+        </tr>
+      </table>
+    </div>
+
+    <div id='start' class='start-row'>
+      <button type='button' class='button-start'>Start game!</button>
+    </div>
+    <script type='text/javascript' src = './src/index.js'></script>
+  </body>
+</html>
