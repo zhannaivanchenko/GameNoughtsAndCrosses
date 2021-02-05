@@ -2,19 +2,21 @@
 <html>
   <head>
     <title>Noughts and Crosses!</title>
+    <meta content='width=device-width, initial-scale=1' name='viewport' />
     <link href="./src/index.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet" type="text/css">
   </head>
 
   <body>
     <div class='header'>
-        <h1>Noughts and Crosses</h1>
+        <h2>Noughts and Crosses</h2>
     </div>
     <div class='title-row'>
         <p class='instructions-title'>Instructions</p>
     
       <div class='instructions-row'>
-       <p class='instructions-text'>In order to win the game, you must place three of your marks in a horizontal, vertical, or diagonal row.</p>
+        <p class='instructions-text'>To start the game, click on empty square in the chart.</p>
+        <p class='instructions-text'> In order to win the game, you must place three of your marks in a horizontal, vertical, or diagonal row.</p>
       </div>
     </div>
     
@@ -38,8 +40,12 @@
       </table>
     </div>
 
-    <div id='start' class='start-row'>
-      <button type='button' class='button-start'>Start game!</button>
+    <div class='status-row'>
+      <h2 id='game-status'>Game Status</h2>
+    </div>
+
+    <div class='start-row'>
+      <button type='button' id='button-start'>Good luck!</button>
     </div>
     <script type='text/javascript' src = './src/index.js'></script>
   </body>
