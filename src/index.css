@@ -34,7 +34,7 @@ body {
 }
 .instructions-row {
     margin: 0 auto;
-    width: 40%;
+    width: 30%;
     /* max-width: 85%; */
 }
   
@@ -54,6 +54,7 @@ body {
 .play-chart-table {
     border-collapse: collapse;
     display: flex;
+    
 }
 
 .play-chart-table td, tr {
@@ -72,18 +73,19 @@ table tr + tr td {
 .status-row {
     display: flex;
     justify-content: center;
-    margin-top: 0.6rem;
+    margin-top: 1rem;
 }
 
 #game-status {
     text-align: center;
     color: #00ffff;
+    visibility: hidden;
 }
 
 .start-row {
     display: flex;
     justify-content: center;
-    margin-top: 0.6rem;
+    margin-top: 1rem;
 }
 
 #button-start {
@@ -107,6 +109,8 @@ table tr + tr td {
     opacity: 0.80;
     box-shadow: 3px 3px 8px 0 #00ffff; 
 }
+
+
 
 @media only screen and (max-width: 768px) {
     html { font-size: 20px; }
