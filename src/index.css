@@ -70,16 +70,39 @@ table td + td {
 table tr + tr td {
     border-top: 3px solid rgb(236, 233, 233);
 }
+
+td[data-sign='cross'] {
+    background-image : url(../public/white-cross2.png);
+    background-size:  50%;
+    background-repeat : no-repeat;
+    background-position : center;
+}
+td[data-sign='nought'] {
+    background-image : url(../public/blue-nought.png);
+    background-size:  50%;
+    background-repeat : no-repeat;
+    background-position : center;
+}
+
 .status-row {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
+    color : #eb6536;
 }
 
 #game-status {
     text-align: center;
-    color: #00ffff;
-    visibility: hidden;
+    
+}
+.wonStatus {
+    visibility : visible;
+    color : #00ffff;
+}
+
+.lostStatus {
+    color : #eb6536;
+    visibility : visible;
 }
 
 .start-row {
