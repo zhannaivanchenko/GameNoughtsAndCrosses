@@ -1,120 +1,93 @@
-let tds = document.getElementsByTagName ('td');
-console.log('tds= ', tds);
+(function () { 
 
-const tdsArray = Array.from(tds);
-console.log('tdsArray= ', tdsArray);
+  const tds = document.getElementsByTagName ('td');
+  const tdsArray = Array.from(tds);
+  const startButton = document.getElementById('button-start');
+  const gameStatus = document.getElementById('game-status');
 
-const startButton = document.getElementById('button-start');
-
-const winningConditions = [
-  ['cell-1', 'cell-2', 'cell-3'],
-  ['cell-4', 'cell-5', 'cell-6'],
-  ['cell-7', 'cell-8', 'cell-9'],
-  ['cell-1', 'cell-4', 'cell-7'],
-  ['cell-2', 'cell-5', 'cell-8'],
-  ['cell-3', 'cell-6', 'cell-9'],
-  ['cell-1', 'cell-5', 'cell-9'],
-  ['cell-3', 'cell-5', 'cell-7'],
-]
-
-
-function gameOver() {
-  let crossArray = [];
-  let noughtArray = [];
-  for (var i = 0; i < tdsArray.length; i++) {
-    if (tdsArray[i].outerHTML.includes('white-cross')) {
-      crossArray.push(tdsArray[i].id);
-    } else if (tdsArray[i].outerHTML.includes('nought')) {
-      noughtArray.push(tdsArray[i].id);
-    }
-  } 
- for (var i = 0; i < winningConditions.length; i++)  {
-   if (winningConditions[i].every( e => crossArray.includes (e))) {
-     document.getElementById('game-status').innerHTML = 'You won! Play again?'
-     document.getElementById('game-status').style.visibility = 'visible';
-     document.getElementById('game-status').style.color = '#00ffff';
-     for (var i=0; i<tds.length; i++) {
-      tds[i].removeEventListener('click', putCross);
-    };
-   } else if (winningConditions[i].every( e => noughtArray.includes (e))){
-     document.getElementById('game-status').innerHTML = 'Computer won! Play Again?';
-     document.getElementById('game-status').style.color = '#eb6536';
-     document.getElementById('game-status').style.visibility = 'visible';
-     for (var i=0; i<tds.length; i++) {
-      tds[i].removeEventListener('click', putCross);
-    };
-   }
- }
-
-}
-
+tdsArray.forEach(e => e.addEventListener('click', putCross));
+startButton.addEventListener('click', resetGame);
 
 function isClicked(cell) {
-  if (cell.style.backgroundImage.length !== 0 ) {
-  return true 
-} else {
-  return false
+  return cell.dataset.sign === 'cross' || cell.dataset.sign === 'nought' ? true : false;
+};
+
+function gameOver(sign) {
+  if (sign === "cross") {
+    gameStatus.innerHTML = 'You won! Play again?';
+    gameStatus.classList.add('wonStatus');
+    tdsArray.forEach(e => e.removeEventListener('click', putCross));
+  } else if (sign === "nought") {
+    gameStatus.innerHTML = 'Computer won! Play Again?';
+    gameStatus.classList.add('lostStatus');
+    tdsArray.forEach(e => e.removeEventListener('click', putCross));
 }
+}
+
+function checkWinner() {
+  if (tdsArray[0].dataset.sign && tdsArray[0].dataset.sign === tdsArray[1].dataset.sign && tdsArray[0].dataset.sign === tdsArray[2].dataset.sign ) {
+    winnerSign = tdsArray[0].dataset.sign;
+    gameOver(winnerSign);
+  } else if (tdsArray[3].dataset.sign && tdsArray[3].dataset.sign === tdsArray[4].dataset.sign && tdsArray[3].dataset.sign === tdsArray[5].dataset.sign ) {
+    winnerSign = tdsArray[3].dataset.sign;
+    gameOver(winnerSign);
+} else if (tdsArray[6].dataset.sign && tdsArray[6].dataset.sign === tdsArray[7].dataset.sign && tdsArray[6].dataset.sign === tdsArray[8].dataset.sign ) {
+    winnerSign = tdsArray[6].dataset.sign;
+    gameOver(winnerSign);
+} else if (tdsArray[0].dataset.sign && tdsArray[0].dataset.sign === tdsArray[5].dataset.sign && tdsArray[0].dataset.sign === tdsArray[8].dataset.sign ) {
+  winnerSign = tdsArray[0].dataset.sign;
+  gameOver(winnerSign);
+} else if (tdsArray[6].dataset.sign && tdsArray[6].dataset.sign === tdsArray[4].dataset.sign && tdsArray[6].dataset.sign === tdsArray[2].dataset.sign ) {
+  winnerSign = tdsArray[6].dataset.sign;
+  gameOver(winnerSign);
+} else if (tdsArray[0].dataset.sign && tdsArray[0].dataset.sign === tdsArray[3].dataset.sign && tdsArray[0].dataset.sign === tdsArray[6].dataset.sign ) {
+  winnerSign = tdsArray[0].dataset.sign;
+  gameOver(winnerSign);
+} else if (tdsArray[1].dataset.sign && tdsArray[1].dataset.sign === tdsArray[4].dataset.sign && tdsArray[1].dataset.sign === tdsArray[7].dataset.sign ) {
+  winnerSign = tdsArray[1].dataset.sign;
+  gameOver(winnerSign);
+} else if (tdsArray[2].dataset.sign && tdsArray[2].dataset.sign === tdsArray[5].dataset.sign && tdsArray[2].dataset.sign === tdsArray[8].dataset.sign ) {
+  winnerSign = tdsArray[2].dataset.sign;
+  gameOver(winnerSign);
+}
+}
+
+function resetGame() {
+  tdsArray.forEach(e => e.dataset.sign = '');
+  tdsArray.forEach(e => e.addEventListener('click', putCross));
+  gameStatus.innerHTML = '';
+  startButton.innerHTML = 'Good luck!';
 };
 
 function putNought() {
-  const min = Math.ceil(1);
-  const max = Math.floor(9);
+  const min = 1;
+  const max = 9;
   const cellNumber = Math.floor(Math.random()*(max-min)+min);
   const cellNought = document.getElementById(`cell-${cellNumber}`);
   if (!isClicked(cellNought)) { 
-  cellNought.style.backgroundImage = 'url(./public/blue-nought.png)';
-  cellNought.style.backgroundSize = '50%';
-  cellNought.style.backgroundRepeat = 'no-repeat';
-  cellNought.style.backgroundPosition = 'center';
-} else {
-  putNought();
+  cellNought.dataset.sign = 'nought';
+} else if (tdsArray.every(e => isClicked(e))) { 
+  gameStatus.innerHTML = 'No place to go! Restart the game!';
+  tdsArray.forEach(e => e.removeEventListener('click', putCross));
 } 
+else {
+  putNought();
+}  
 };
-
 
 function putCross(e) {
   if (!isClicked(e.currentTarget)) {
-    e.currentTarget.style.backgroundImage = 'url(./public/white-cross2.png)';
-    e.currentTarget.style.backgroundSize = '50%';
-    e.currentTarget.style.backgroundRepeat = 'no-repeat';
-    e.currentTarget.style.backgroundPosition = 'center';
-    document.getElementById('button-start').innerHTML = 'Reset game!';
-    gameOver();
-
-    if (document.getElementById('game-status').innerHTML === '') {
-      putNought();
-      gameOver();
-    }
-    
-  } else {
+    e.currentTarget.dataset.sign = 'cross';
+    startButton.innerHTML = 'Reset game!';
+    checkWinner();
+    if (gameStatus.innerHTML === '') {
+    putNought();
+    checkWinner(); 
+  }
+ } else {
     alert('This cell is already clicked! Click a blank one!')
-  }
-  
+  } 
+
 };
 
-for (var i=0; i<tds.length; i++) {
-  tds[i].addEventListener('click', putCross);
-};
-
-function resetGame() {
-  for (i=0; i<tdsArray.length; i++) {
-    document.getElementById(tdsArray[i].id).style.backgroundImage = '';
-  }
-  document.getElementById('game-status').innerHTML = '';
-  document.getElementById('game-status').style.visibility = 'hidden';
-  document.getElementById('button-start').innerHTML = 'Good luck!';
-  for (var i=0; i<tds.length; i++) {
-    tds[i].addEventListener('click', putCross);
-  };
-}
-
-startButton.onclick = resetGame;
-
-
-
-
-
-
-
-
+})()
