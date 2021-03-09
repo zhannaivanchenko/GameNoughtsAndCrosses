@@ -25,12 +25,8 @@ function gameOver(sign) {
 }
 
 function transformToMatrix(size) {
-  // let res = new Array(size).fill(new Array (size));
-  let res = [
-    ['', '', ''],
-    ['', '', ''],
-    ['', '', '']
-  ];
+  let res = Array.from( new Array(size), function() { return []; } );;
+  
   console.log('res=', res);
   const cellsTable = [...document.getElementsByTagName('td')];
   const arrayOfSigns = cellsTable.map((el)=> el.dataset.sign);
