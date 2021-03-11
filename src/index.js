@@ -24,32 +24,60 @@ function gameOver(sign) {
 }
 }
 
-function checkWinner() {
-  if (tdsArray[0].dataset.sign && tdsArray[0].dataset.sign === tdsArray[1].dataset.sign && tdsArray[0].dataset.sign === tdsArray[2].dataset.sign ) {
-    winnerSign = tdsArray[0].dataset.sign;
-    gameOver(winnerSign);
-  } else if (tdsArray[3].dataset.sign && tdsArray[3].dataset.sign === tdsArray[4].dataset.sign && tdsArray[3].dataset.sign === tdsArray[5].dataset.sign ) {
-    winnerSign = tdsArray[3].dataset.sign;
-    gameOver(winnerSign);
-} else if (tdsArray[6].dataset.sign && tdsArray[6].dataset.sign === tdsArray[7].dataset.sign && tdsArray[6].dataset.sign === tdsArray[8].dataset.sign ) {
-    winnerSign = tdsArray[6].dataset.sign;
-    gameOver(winnerSign);
-} else if (tdsArray[0].dataset.sign && tdsArray[0].dataset.sign === tdsArray[5].dataset.sign && tdsArray[0].dataset.sign === tdsArray[8].dataset.sign ) {
-  winnerSign = tdsArray[0].dataset.sign;
-  gameOver(winnerSign);
-} else if (tdsArray[6].dataset.sign && tdsArray[6].dataset.sign === tdsArray[4].dataset.sign && tdsArray[6].dataset.sign === tdsArray[2].dataset.sign ) {
-  winnerSign = tdsArray[6].dataset.sign;
-  gameOver(winnerSign);
-} else if (tdsArray[0].dataset.sign && tdsArray[0].dataset.sign === tdsArray[3].dataset.sign && tdsArray[0].dataset.sign === tdsArray[6].dataset.sign ) {
-  winnerSign = tdsArray[0].dataset.sign;
-  gameOver(winnerSign);
-} else if (tdsArray[1].dataset.sign && tdsArray[1].dataset.sign === tdsArray[4].dataset.sign && tdsArray[1].dataset.sign === tdsArray[7].dataset.sign ) {
-  winnerSign = tdsArray[1].dataset.sign;
-  gameOver(winnerSign);
-} else if (tdsArray[2].dataset.sign && tdsArray[2].dataset.sign === tdsArray[5].dataset.sign && tdsArray[2].dataset.sign === tdsArray[8].dataset.sign ) {
-  winnerSign = tdsArray[2].dataset.sign;
-  gameOver(winnerSign);
+function transformToMatrix(size) {
+  let res = Array.from( new Array(size), function() { return []; } );;
+  
+  console.log('res=', res);
+  const cellsTable = [...document.getElementsByTagName('td')];
+  const arrayOfSigns = cellsTable.map((el)=> el.dataset.sign);
+  console.log('arrayOfSigns=', arrayOfSigns);
+  
+  arrayOfSigns.forEach((el, i) => {
+    const x = Math.floor(i / size);
+    const y = i % size;
+    res[x][y] = el;
+  })
+ return res;
 }
+
+function getColumns(array) {
+  let columnsArray = [];
+  columnsArray = array.map((el, i)=> el.map((_, j)=> array[j][i]));
+  console.log('columnsArray=', columnsArray);
+  return columnsArray;
+  }
+
+function getDiagonals(array, size) {
+    const diagonalsArray = [[],[]];
+    for (let i=0; i<size; i++) {
+      for (let j=0; j<size; j++) {
+        if (i === j) { diagonalsArray[0].push(array[i][j]); 
+        }}
+    }
+    for (let i= size-1; i>=0; i-- ) {
+      for (let j=0; j<array.length; j++) {
+        if ((i + j) === (size - 1)) { diagonalsArray[1].push(array[i][j]) ;
+      }}
+    }
+    console.log('diagonalsArray=', diagonalsArray);
+    return diagonalsArray;  
+}
+
+
+function checkWinner(array) {
+    const isCrossWin = array.some(row => row.every(data => data === 'cross'));
+    const isNoughtWin = array.some(row => row.every(data => data === 'nought'));
+    if (isCrossWin) { gameOver('cross') }
+    else if (isNoughtWin) { gameOver('nought') };
+}
+
+function checkWinnerCombinations() {
+  const result = transformToMatrix(3);
+  const columns = getColumns(result);
+  const diagonals = getDiagonals(result, 3);
+  checkWinner(result);
+  checkWinner(columns);
+  checkWinner(diagonals);
 }
 
 function resetGame() {
@@ -79,15 +107,14 @@ function putCross(e) {
   if (!isClicked(e.currentTarget)) {
     e.currentTarget.dataset.sign = 'cross';
     startButton.innerHTML = 'Reset game!';
-    checkWinner();
+    checkWinnerCombinations();
     if (gameStatus.innerHTML === '') {
     putNought();
-    checkWinner(); 
+    checkWinnerCombinations(); 
   }
  } else {
     alert('This cell is already clicked! Click a blank one!')
-  } 
-
+  }
 };
 
 })()

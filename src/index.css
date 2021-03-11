@@ -88,7 +88,7 @@ td[data-sign='nought'] {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
-    color : #eb6536;
+    /* color : #eb6536; */
 }
 
 #game-status {
