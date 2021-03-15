@@ -49,6 +49,11 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 2rem;
+    /* border-collapse: collapse;
+    display: flex; */
+    /* padding: 2rem;
+    text-align: center;
+    cursor: pointer; */
 }
 
 .play-chart-table {

@@ -1,14 +1,16 @@
-(function () { 
+// (function () { 
 
-  const tds = document.getElementsByTagName ('td');
-  const tdsArray = Array.from(tds);
+  // const tds = document.getElementsByTagName ('td');
+  // const tdsArray = Array.from(tds);
+  let tdsArray = [];
   const startButton = document.getElementById('button-start');
   const gameStatus = document.getElementById('game-status');
 
-tdsArray.forEach(e => e.addEventListener('click', putCross));
+// tdsArray.forEach(e => e.addEventListener('click', putCross));
 startButton.addEventListener('click', resetGame);
 
 function isClicked(cell) {
+  console.log('cell=%o', cell);
   return cell.dataset.sign === 'cross' || cell.dataset.sign === 'nought' ? true : false;
 };
 
@@ -26,12 +28,8 @@ function gameOver(sign) {
 
 function transformToMatrix(size) {
   let res = Array.from( new Array(size), function() { return []; } );;
-  
-  console.log('res=', res);
   const cellsTable = [...document.getElementsByTagName('td')];
   const arrayOfSigns = cellsTable.map((el)=> el.dataset.sign);
-  console.log('arrayOfSigns=', arrayOfSigns);
-  
   arrayOfSigns.forEach((el, i) => {
     const x = Math.floor(i / size);
     const y = i % size;
@@ -43,7 +41,6 @@ function transformToMatrix(size) {
 function getColumns(array) {
   let columnsArray = [];
   columnsArray = array.map((el, i)=> el.map((_, j)=> array[j][i]));
-  console.log('columnsArray=', columnsArray);
   return columnsArray;
   }
 
@@ -59,7 +56,6 @@ function getDiagonals(array, size) {
         if ((i + j) === (size - 1)) { diagonalsArray[1].push(array[i][j]) ;
       }}
     }
-    console.log('diagonalsArray=', diagonalsArray);
     return diagonalsArray;  
 }
 
@@ -88,10 +84,14 @@ function resetGame() {
 };
 
 function putNought() {
+ if (!tdsArray.length ) {
+   const tds = document.getElementsByTagName ('td');
+   tdsArray = Array.from(tds);
+  }
   const min = 1;
   const max = 9;
   const cellNumber = Math.floor(Math.random()*(max-min)+min);
-  const cellNought = document.getElementById(`cell-${cellNumber}`);
+  const cellNought = document.getElementById(`${cellNumber}`);
   if (!isClicked(cellNought)) { 
   cellNought.dataset.sign = 'nought';
 } else if (tdsArray.every(e => isClicked(e))) { 
@@ -103,8 +103,14 @@ else {
 }  
 };
 
+
+
+// })()
+
 function putCross(e) {
+  console.log('e=', e);
   if (!isClicked(e.currentTarget)) {
+    
     e.currentTarget.dataset.sign = 'cross';
     startButton.innerHTML = 'Reset game!';
     checkWinnerCombinations();
@@ -117,4 +123,4 @@ function putCross(e) {
   }
 };
 
-})()
+// module.exports={putCross};
