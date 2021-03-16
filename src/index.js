@@ -91,10 +91,16 @@ function putNought() {
   const min = 1;
   const max = 9;
   const cellNumber = Math.floor(Math.random()*(max-min)+min);
-  const cellNought = document.getElementById(`${cellNumber}`);
-  if (!isClicked(cellNought)) { 
-  cellNought.dataset.sign = 'nought';
-} else if (tdsArray.every(e => isClicked(e))) { 
+  const x = Math.floor(cellNumber / size);
+  const y = cellNumber % size;
+  // res[x][y] = el;
+  
+
+  if(this._db[x][y] === 0) {this._db[x][y] === 2}
+  // document.getElementById(`${cellNumber}`);
+  // if (!isClicked(cellNought)) { 
+  // cellNought.dataset.sign = 'nought';
+ else if (tdsArray.every(e => isClicked(e))) { 
   gameStatus.innerHTML = 'No place to go! Restart the game!';
   tdsArray.forEach(e => e.removeEventListener('click', putCross));
 } 
