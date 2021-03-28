@@ -1,21 +1,6 @@
 import { matrix }from "./matrix.js";
 
 class PlayTable {
-    tdsArray = []
-    
-    getTds() {
-        this.tdsArray = [...document.getElementsByTagName('td')];
-    }
-
-    addEventListener(element, eventName, handler) {
-        if (!Array.isArray(element)) {element = [element]}
-        element.forEach(e => e.addEventListener(eventName, handler.bind(this), true));
-
-    }
-    removeEventListener(element, eventName, handler) {
-        if (!Array.isArray(element)) {element = [element]}
-        element.forEach(e => e.removeEventListener(eventName, handler.bind(this), true));
-    }
 
     getTableView() {
         let table = '';
@@ -34,10 +19,17 @@ class PlayTable {
                 i++;
             })
             table = table + tableRow + cells + tableRowEnd;
-        });  
+        });
+        
         return table = tableStart + table + tableEnd;
     }
 
+    renderTable() {
+        const playChart = document.getElementById('chart-table');
+        playChart.innerHTML = this.getTableView();
+        
+    }
+    
    updateTableView() {
        const cellsTable = [...document.getElementsByTagName('td')];
        let j = 0;
@@ -51,10 +43,6 @@ class PlayTable {
     })   
    }
 
-    renderTable() {
-        const playChart = document.getElementById('chart-table');
-        playChart.innerHTML = this.getTableView();
-    }
 }
 
 export const playTable = new PlayTable();
