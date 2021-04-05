@@ -10,7 +10,6 @@
 startButton.addEventListener('click', resetGame);
 
 function isClicked(cell) {
-  console.log('cell=%o', cell);
   return cell.dataset.sign === 'cross' || cell.dataset.sign === 'nought' ? true : false;
 };
 
@@ -114,7 +113,6 @@ else {
 // })()
 
 function putCross(e) {
-  console.log('e=', e);
   if (!isClicked(e.currentTarget)) {
     
     e.currentTarget.dataset.sign = 'cross';

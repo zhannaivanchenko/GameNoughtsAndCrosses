@@ -1,5 +1,6 @@
 import { game } from "./game.js";
 import { matrix } from "./matrix.js";
+import { eventListener } from "./eventListener.js";
 
 class Winner {
     getColumns() {
@@ -27,17 +28,29 @@ class Winner {
     checkWinner(matrixToCheck) {
             const isCrossWin = matrixToCheck.some(row => row.every(cell => cell === 1));
             const isNoughtWin = matrixToCheck.some(row => row.every(cell => cell === 2));
-            if (isCrossWin) { game.gameOver('cross') }
-            else if (isNoughtWin) { game.gameOver('nought') };
+            if (isCrossWin) { this.gameOver('cross') }
+            else if (isNoughtWin) { this.gameOver('nought') };
     }
         
+    gameOver(sign) {
+        if (sign === "cross") {
+              game.gameStatus.innerHTML = 'You won! Play again?';
+              game.gameStatus.classList.add('wonStatus');
+              eventListener.removeEventListenerCross();
+            } else if (sign === "nought") {
+              game.gameStatus.innerHTML = 'Computer won! Play Again?';
+              game.gameStatus.classList.add('lostStatus');
+              eventListener.removeEventListenerCross();
+          }
+    }
+    
     checkWinnerCombinations() {
-          const columns = this.getColumns();
-          const diagonals = this.getDiagonals();
-          this.checkWinner(matrix.getDb());
-          this.checkWinner(columns);
-          this.checkWinner(diagonals);
-      }   
+      const columns = this.getColumns();
+      const diagonals = this.getDiagonals();
+      this.checkWinner(matrix.getDb());
+      this.checkWinner(columns);
+      this.checkWinner(diagonals);
+  }
 }  
 
 export const winner = new Winner();
